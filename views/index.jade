@@ -1,0 +1,66 @@
+doctype html
+
+head
+  title Axela CRM | Student List
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js')
+.container
+  -function prettyDate(dateString){
+    //if it's already a date object and not a string you don't need this line:
+    -var date = new Date(dateString);
+    -var d = date.getDate();
+    -var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+    -var m = monthNames[date.getMonth()];
+    -var y = date.getFullYear();
+    -return d+' '+m+' '+y;
+  -}
+
+  h1 Student List Page
+  hr
+  a(href='/add')
+    button.btn.btn-primary
+      i.fas.fa-user-plus
+      |  Add Student
+  div
+    table.table(style='margin-top: 3rem;')
+      tr
+        th Name
+        th Age
+        th DOB
+        th Mobile
+        th Email
+        th Address
+        th Course
+        th Active
+        th Edit
+        th Delete
+      each i in name.rows
+        tr.active
+            -var id = i['student_id']
+            td= i['student_name']
+            td= i['student_age']
+            td #{prettyDate(i['student_dob'])}
+            td= i['student_mobile']
+            td= i['student_email']
+            td= i['student_address']
+            if i['student_course_id'] == 1.
+              td= "Java"
+            else if i['student_course_id'] == 2.
+              td= "Python"
+            td= i['student_active']
+            td
+              form(method='GET' action="/edit/#{id}")
+                button.btn-primary(style='border-radius: 0.25rem; box-shadow: none; border: none; outline: none;')
+                  i.fas.fa-user-edit(style='font-size: 0.75em')
+            td
+              form(method='POST' action="/delete/#{id}")
+                button.btn-primary(style='border-radius: 0.25rem; box-shadow: none; border: none; outline: none;')
+                  i.fas.fa-user-times(style='font-size: 0.75em')
+     if name.rows.length == 0
+        div
+          h3(class="text-center") No students to view    
+ 
+script(src='https://kit.fontawesome.com/e10181b506.js' crossorigin='anonymous')

@@ -1,0 +1,69 @@
+doctype html
+head
+  title Axela CRM | Add Student
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js')
+.container
+  h1 Edit Student
+  .container(style='border: 1px solid #CDCDCD; border-radius: 0.5rem;')
+    
+    form(method='POST' action='#{id}')
+      .row
+        .col-sm-6(style='margin-top: 1rem;')
+          .form-group
+            label(for='name')
+              b Student Name
+            input.form-control(type='text' name='name' value=res.rows[0]['student_name'])
+        .col-sm-6(style='margin-top: 1rem;')
+          .form-group
+            label(for='age')
+              b Student Age
+            input.form-control(type='number' name='age' value=res.rows[0]['student_age'])
+      .row
+        .col-sm-6(style='margin-top: 1rem;')
+          .form-group
+            label(for='dob')
+              b Student DOB
+            input.form-control(type='date' name='dob' value=date)
+        .col-sm-6(style='margin-top: 1rem;')
+          .form-group
+            label(for='mobile')
+              b Student Mobile
+            input.form-control(type='number' name='mobile' value=res.rows[0]['student_mobile'])
+      .row
+        .col-sm-6(style='margin-top: 1rem;')
+          .form-group
+            label(for='email')
+              b Student Email
+            input.form-control(type='email' name='email' value=res.rows[0]['student_email'])
+        .col-sm-6(style='margin-top: 1rem;')
+          .form-group
+            label(for='address')
+              b Student Address
+            textarea.form-control(rows='5' name='address')= res.rows[0]['student_address']
+      .row
+        .col-sm-6(style='margin-top: 1rem;')
+          .form-group
+            label(for='course')
+              b Student Course
+            select.form-control(name='course')
+                if res.rows[0]['student_course_id'] == 1
+                    option(selected='true') Java
+                    option Python
+                else if res.rows[0]['student_course_id'] == 2     
+                    option Java
+                    option(selected='true') Python
+            .form-group
+            if res.rows[0]['student_active'] == true
+                input(type='checkbox' name='activity' checked='checked')
+            else if res.rows[0]['student_active'] == false
+                input(type='checkbox' name='activity')
+            label(for='activity') &nbsp;&nbsp;Active
+          button.btn.btn-primary Edit Student
+          a(href="/")
+            button.btn.btn-primary(style='margin-left: 1rem;') Go Back
+      .col-sm-6(style='margin-top: 1rem;')
+script(src='https://kit.fontawesome.com/e10181b506.js' crossorigin='anonymous')
